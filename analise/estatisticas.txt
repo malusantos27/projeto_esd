@@ -1,0 +1,46 @@
+Média de idade por nível de educação:
+10th: 37.43 anos
+11th: 32.36 anos
+12th: 32.00 anos
+1st-4th: 46.14 anos
+5th-6th: 42.89 anos
+7th-8th: 48.45 anos
+9th: 41.06 anos
+Assoc-acdm: 37.38 anos
+Assoc-voc: 38.55 anos
+Bachelors: 38.90 anos
+Doctorate: 47.70 anos
+HS-grad: 38.97 anos
+Masters: 44.05 anos
+Preschool: 42.76 anos
+Prof-school: 44.75 anos
+Some-college: 35.76 anos
+
+Frequência de cada workclass:
+?: 1836 registros
+Federal-gov: 960 registros
+Local-gov: 2093 registros
+Never-worked: 7 registros
+Private: 22696 registros
+Self-emp-inc: 1116 registros
+Self-emp-not-inc: 2541 registros
+State-gov: 1298 registros
+Without-pay: 14 registros
+
+Desvio padrão de horas semanais por education:
+10th: 13.78 h/semana
+11th: 13.96 h/semana
+12th: 12.61 h/semana
+1st-4th: 12.81 h/semana
+5th-6th: 10.54 h/semana
+7th-8th: 14.19 h/semana
+9th: 11.05 h/semana
+Assoc-acdm: 12.19 h/semana
+Assoc-voc: 10.79 h/semana
+Bachelors: 11.45 h/semana
+Doctorate: 15.07 h/semana
+HS-grad: 11.33 h/semana
+Masters: 12.27 h/semana
+Preschool: 12.43 h/semana
+Prof-school: 14.79 h/semana
+Some-college: 12.76 h/semana

@@ -1,0 +1,19 @@
+Previsão de média de horas por educação após 1 ano (simulado):
+10th: 38.24 h/semana
+11th: 34.71 h/semana
+12th: 36.28 h/semana
+1st-4th: 41.10 h/semana
+5th-6th: 40.88 h/semana
+7th-8th: 42.56 h/semana
+9th: 39.77 h/semana
+Assoc-acdm: 41.80 h/semana
+Assoc-voc: 42.97 h/semana
+Bachelors: 44.01 h/semana
+Doctorate: 49.52 h/semana
+HS-grad: 42.14 h/semana
+Masters: 45.32 h/semana
+Preschool: 38.47 h/semana
+Prof-school: 50.09 h/semana
+Some-college: 39.99 h/semana
+
+Total de novos registros simulados: 29917

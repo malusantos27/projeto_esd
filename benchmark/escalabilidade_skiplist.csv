@@ -1,0 +1,4 @@
+Tamanho,TempoInsercao(ms),TempoBusca(ms),TempoRemocao(ms),LatenciaMedia(ms),Memoria(B)
+3256,1.13969,0.29966,1.51336,0.984237,604
+16280,6.23423,1.80765,7.49264,5.17817,604
+32561,11.7092,3.71203,15.0613,10.1608,604
