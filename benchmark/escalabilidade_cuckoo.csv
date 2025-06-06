@@ -1,4 +1,0 @@
-Tamanho,TempoInsercao(ms),TempoBusca(ms),TempoRemocao(ms),LatenciaMedia(ms),Memoria(B),Kicks
-3256,0.49138,0.13222,0.48626,0.369953,256,3248
-16280,2.52138,0.67581,2.71538,1.97086,288,16271
-32561,5.01027,1.42388,5.37279,3.93565,288,32552

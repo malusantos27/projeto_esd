@@ -9,7 +9,6 @@
 using namespace std;
 using namespace chrono;
 
-// Estimar colisões usando os hashes
 int contarColisoes(const unordered_map<string, int>& tabela, const vector<string>& dados) {
     unordered_map<size_t, int> hash_count;
     hash<string> hasher;
@@ -21,11 +20,12 @@ int contarColisoes(const unordered_map<string, int>& tabela, const vector<string
     return colisoes;
 }
 
-int main() {
+void executar_benchmark_hash() {
+    cout << "\n--- Executando Benchmark: Hash (unordered_map) ---\n";
     ifstream file("Data/adult.data");
     if (!file.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;
-        return 1;
+        return;
     }
 
     vector<string> dados;
@@ -53,7 +53,6 @@ int main() {
         unordered_map<string, int> tabela;
         vector<string> chaves(dados.begin(), dados.begin() + tam);
 
-        // INSERÇÃO
         auto ini_ins = steady_clock::now();
         for (int r = 0; r < repeticoes; ++r) {
             tabela.clear();
@@ -61,14 +60,12 @@ int main() {
         }
         auto fim_ins = steady_clock::now();
 
-        // BUSCA
         auto ini_busca = steady_clock::now();
         for (int r = 0; r < repeticoes; ++r) {
             for (int i = 0; i < tam / 2; ++i) tabela.find(chaves[i]);
         }
         auto fim_busca = steady_clock::now();
 
-        // REMOÇÃO
         auto ini_rem = steady_clock::now();
         for (int r = 0; r < repeticoes; ++r) {
             unordered_map<string, int> temp = tabela;
@@ -85,7 +82,6 @@ int main() {
         double t_rem_ms = t_rem.count() / 1000.0;
         double latencia = (t_ins_ms + t_bus_ms + t_rem_ms) / 3.0;
 
-        // Estimar memória (chave + valor + ponteiro)
         long memoria = tabela.size() * (sizeof(string) + sizeof(int) + sizeof(void*));
         int colisoes = contarColisoes(tabela, chaves);
 
@@ -94,5 +90,4 @@ int main() {
 
     bench.close();
     cout << "✅ Benchmark de escalabilidade gerado em benchmark/escalabilidade_hash.csv\n";
-    return 0;
 }

@@ -1,4 +1,0 @@
-Tamanho,TempoInsercao(ms),TempoBusca(ms),TempoRemocao(ms),LatenciaMedia(ms),Memoria(B),Colisoes
-3256,0.27718,0.10459,0.05656,0.14611,256,3248
-16280,1.50884,0.62345,0.20607,0.779453,288,16271
-32561,2.64782,1.25891,0.50715,1.47129,288,32552

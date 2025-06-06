@@ -3,36 +3,38 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-using namespace std;
+#include <string>
 
-int main() {
-    ifstream file("Data/adult.data");
+// A função deve se chamar 'executar_leitura', e não 'main'.
+void executar_leitura() {
+    std::ifstream file("Data/adult.data");
     if (!file.is_open()) {
-        cerr << "Erro ao abrir Data/adult.data" << endl;
-        return 1;
+        std::cerr << "Erro ao abrir Data/adult.data" << std::endl;
+        return;
     }
 
-    string linha;
+    std::cout << "\n--- Executando Leitura Simples ---\n";
+    std::string linha;
     int contador = 0;
 
     while (getline(file, linha) && contador < 5) {
-        stringstream ss(linha);
-        string campo;
-        vector<string> campos;
+        std::stringstream ss(linha);
+        std::string campo;
+        std::vector<std::string> campos;
 
         while (getline(ss, campo, ',')) {
             campos.push_back(campo);
         }
 
-        cout << "Linha " << contador + 1 << ": ";
+        std::cout << "Linha " << contador + 1 << ": ";
         for (auto& c : campos) {
-            c.erase(remove(c.begin(), c.end(), ' '), c.end());
-            cout << "[" << c << "] ";
+            c.erase(std::remove(c.begin(), c.end(), ' '), c.end());
+            std::cout << "[" << c << "] ";
         }
-        cout << endl;
+        std::cout << std::endl;
         contador++;
     }
 
     file.close();
-    return 0;
+    std::cout << "--- Fim da Leitura Simples ---\n";
 }

@@ -6,26 +6,27 @@
 #include <fstream>
 #include <chrono>
 #include <algorithm>
+#include <sstream> // <<< CORREÇÃO: Biblioteca adicionada aqui
 using namespace std;
 using namespace std::chrono;
 
 const int MAX_LEVEL = 6;
 
-struct Node {
+struct NodeSkip {
     string key;
-    vector<Node*> forward;
-    Node(string k, int level) : key(k), forward(level + 1, nullptr) {}
+    vector<NodeSkip*> forward;
+    NodeSkip(string k, int level) : key(k), forward(level + 1, nullptr) {}
 };
 
 class SkipList {
-    Node* header;
+    NodeSkip* header;
     int level;
     int total_nodes;
 
 public:
     SkipList() {
         level = 0;
-        header = new Node("", MAX_LEVEL);
+        header = new NodeSkip("", MAX_LEVEL);
         total_nodes = 0;
     }
 
@@ -36,8 +37,8 @@ public:
     }
 
     void insert(string key) {
-        vector<Node*> update(MAX_LEVEL + 1);
-        Node* current = header;
+        vector<NodeSkip*> update(MAX_LEVEL + 1);
+        NodeSkip* current = header;
         for (int i = level; i >= 0; i--) {
             while (current->forward[i] && current->forward[i]->key < key)
                 current = current->forward[i];
@@ -51,7 +52,7 @@ public:
                     update[i] = header;
                 level = rlevel;
             }
-            Node* n = new Node(key, rlevel);
+            NodeSkip* n = new NodeSkip(key, rlevel);
             for (int i = 0; i <= rlevel; i++) {
                 n->forward[i] = update[i]->forward[i];
                 update[i]->forward[i] = n;
@@ -61,7 +62,7 @@ public:
     }
 
     bool search(string key) {
-        Node* current = header;
+        NodeSkip* current = header;
         for (int i = level; i >= 0; i--) {
             while (current->forward[i] && current->forward[i]->key < key)
                 current = current->forward[i];
@@ -71,8 +72,8 @@ public:
     }
 
     void remove(string key) {
-        vector<Node*> update(MAX_LEVEL + 1);
-        Node* current = header;
+        vector<NodeSkip*> update(MAX_LEVEL + 1);
+        NodeSkip* current = header;
         for (int i = level; i >= 0; i--) {
             while (current->forward[i] && current->forward[i]->key < key)
                 current = current->forward[i];
@@ -91,38 +92,38 @@ public:
     }
 
     int getMemoryEstimate() const {
-        return total_nodes * sizeof(Node) + (MAX_LEVEL + 1) * sizeof(Node*);
+        return total_nodes * sizeof(NodeSkip) + (MAX_LEVEL + 1) * sizeof(NodeSkip*);
     }
 
     void clear() {
         delete header;
-        header = new Node("", MAX_LEVEL);
+        header = new NodeSkip("", MAX_LEVEL);
         level = 0;
         total_nodes = 0;
     }
 };
 
-int main() {
+void executar_benchmark_skiplist() {
+    cout << "\n--- Executando Benchmark: Skip List ---\n";
     srand(time(0));
     ifstream file("Data/adult.data");
     if (!file.is_open()) {
         cerr << "Erro ao abrir Data/adult.data" << endl;
-        return 1;
+        return;
     }
 
     vector<string> dados;
     string linha;
     while (getline(file, linha)) {
+        stringstream ss(linha);
         string campo;
-        int cont = 0;
-        string chave;
-        for (char c : linha) {
-            if (c == ',') cont++;
-            else if (cont == 3) chave += c;
-            if (cont > 3) break;
+        vector<string> campos;
+        while (getline(ss, campo, ',')) campos.push_back(campo);
+        if (campos.size() >= 4) {
+             string chave = campos[3];
+             chave.erase(remove(chave.begin(), chave.end(), ' '), chave.end());
+             if (!chave.empty()) dados.push_back(chave);
         }
-        chave.erase(remove(chave.begin(), chave.end(), ' '), chave.end());
-        if (!chave.empty()) dados.push_back(chave);
     }
     file.close();
 
@@ -175,5 +176,4 @@ int main() {
 
     bench.close();
     cout << "✅ Benchmark de escalabilidade gerado em benchmark/escalabilidade_skiplist.csv\n";
-    return 0;
 }

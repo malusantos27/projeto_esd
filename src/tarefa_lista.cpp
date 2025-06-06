@@ -9,29 +9,29 @@
 using namespace std;
 using namespace chrono;
 
-struct Registro {
+struct RegistroLista {
     string education;
     string workclass;
-    Registro* prox;
-    Registro(string e, string w) : education(e), workclass(w), prox(nullptr) {}
+    RegistroLista* prox;
+    RegistroLista(string e, string w) : education(e), workclass(w), prox(nullptr) {}
 };
 
 class Lista {
-    Registro* head;
+    RegistroLista* head;
     int tamanho;
 
 public:
     Lista() : head(nullptr), tamanho(0) {}
 
     void inserir(string edu, string work) {
-        Registro* novo = new Registro(edu, work);
+        RegistroLista* novo = new RegistroLista(edu, work);
         novo->prox = head;
         head = novo;
         tamanho++;
     }
 
     bool buscar(string edu) {
-        Registro* atual = head;
+        RegistroLista* atual = head;
         while (atual) {
             if (atual->education == edu) return true;
             atual = atual->prox;
@@ -40,8 +40,8 @@ public:
     }
 
     void remover(string edu) {
-        Registro* atual = head;
-        Registro* ant = nullptr;
+        RegistroLista* atual = head;
+        RegistroLista* ant = nullptr;
         while (atual) {
             if (atual->education == edu) {
                 if (ant) ant->prox = atual->prox;
@@ -55,15 +55,16 @@ public:
     }
 
     int getMemoria() const {
-        return tamanho * (sizeof(Registro) + sizeof(string) * 2);
+        return tamanho * (sizeof(RegistroLista) + sizeof(string) * 2);
     }
 };
 
-int main() {
+void executar_benchmark_lista() {
+    cout << "\n--- Executando Benchmark: Lista Encadeada ---\n";
     ifstream file("Data/adult.data");
     if (!file.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;
-        return 1;
+        return;
     }
 
     vector<pair<string, string>> dados;
@@ -129,5 +130,4 @@ int main() {
 
     bench.close();
     cout << "✅ Benchmark de escalabilidade gerado em benchmark/escalabilidade_lista.csv\n";
-    return 0;
 }

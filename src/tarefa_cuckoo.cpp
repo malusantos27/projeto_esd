@@ -49,11 +49,12 @@ public:
     }
 };
 
-int main() {
+void executar_benchmark_cuckoo() {
+    cout << "\n--- Executando Benchmark: Cuckoo Hash ---\n";
     ifstream file("Data/adult.data");
     if (!file.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;
-        return 1;
+        return;
     }
 
     vector<string> dados;
@@ -118,5 +119,4 @@ int main() {
 
     bench.close();
     cout << "✅ Benchmark de escalabilidade gerado em benchmark/escalabilidade_cuckoo.csv\n";
-    return 0;
 }

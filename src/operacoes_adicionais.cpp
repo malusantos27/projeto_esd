@@ -6,30 +6,29 @@
 #include <map>
 #include <algorithm>
 #include <iomanip>
-using namespace std;
 
-// Estrutura para armazenar os dados relevantes
 struct Registro {
     int age;
-    string education;
-    string workclass;
-    string income;
+    std::string education;
+    std::string workclass;
+    std::string income;
 };
 
-int main() {
-    ifstream file("Data/adult.data");
+void executar_operacoes_adicionais() {
+    std::cout << "\n--- Executando Análises Adicionais ---\n";
+    std::ifstream file("Data/adult.data");
     if (!file.is_open()) {
-        cerr << "Erro ao abrir o arquivo." << endl;
-        return 1;
+        std::cerr << "Erro ao abrir o arquivo." << std::endl;
+        return;
     }
 
-    vector<Registro> registros;
-    string linha;
+    std::vector<Registro> registros;
+    std::string linha;
 
     while (getline(file, linha)) {
-        stringstream ss(linha);
-        string campo;
-        vector<string> campos;
+        std::stringstream ss(linha);
+        std::string campo;
+        std::vector<std::string> campos;
         while (getline(ss, campo, ',')) {
             campos.push_back(campo);
         }
@@ -42,9 +41,8 @@ int main() {
         r.education = campos[3];
         r.income = campos[14];
 
-        // Remover espaços
-        for (string* campo : {&r.education, &r.workclass, &r.income}) {
-            campo->erase(remove(campo->begin(), campo->end(), ' '), campo->end());
+        for (std::string* campo_ptr : {&r.education, &r.workclass, &r.income}) {
+            campo_ptr->erase(std::remove(campo_ptr->begin(), campo_ptr->end(), ' '), campo_ptr->end());
         }
 
         registros.push_back(r);
@@ -52,52 +50,45 @@ int main() {
 
     file.close();
 
-    // ===== 1️⃣ MÉDIA DE IDADE POR EDUCATION =====
-    map<string, pair<int, int>> idade_por_edu; // {soma_idade, quantidade}
-
+    std::map<std::string, std::pair<int, int>> idade_por_edu;
     for (const auto& r : registros) {
         idade_por_edu[r.education].first += r.age;
         idade_por_edu[r.education].second++;
     }
 
-    cout << fixed << setprecision(2);
-    cout << "1️⃣ Média de idade por education:\n";
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "1️⃣  Média de idade por education:\n";
     for (const auto& par : idade_por_edu) {
         double media = (double)par.second.first / par.second.second;
-        cout << "  " << par.first << ": " << media << " anos\n";
+        std::cout << "  " << par.first << ": " << media << " anos\n";
     }
 
-    // ===== 2️⃣ FILTRO: income >50K com Bachelors =====
-    cout << "\n2️⃣ Pessoas com income >50K e education == Bachelors:\n";
+    std::cout << "\n2️⃣  Pessoas com income >50K e education == Bachelors:\n";
     for (const auto& r : registros) {
         if (r.education == "Bachelors" && r.income == ">50K") {
-            cout << "  Idade: " << r.age << ", Workclass: " << r.workclass << endl;
+            std::cout << "  Idade: " << r.age << ", Workclass: " << r.workclass << std::endl;
         }
     }
 
-    // ===== 3️⃣ TOP 3 WORKCLASS por EDUCATION =====
-    cout << "\n3️⃣ Top 3 workclass por education:\n";
-    map<string, map<string, int>> contador;
-
+    std::cout << "\n3️⃣  Top 3 workclass por education:\n";
+    std::map<std::string, std::map<std::string, int>> contador;
     for (const auto& r : registros) {
         contador[r.education][r.workclass]++;
     }
 
     for (const auto& par : contador) {
-        string edu = par.first;
-        const map<string, int>& workmap = par.second;
+        std::string edu = par.first;
+        const auto& workmap = par.second;
 
-        // converter para vetor e ordenar
-        vector<pair<string, int>> vec(workmap.begin(), workmap.end());
-        sort(vec.begin(), vec.end(), [](const pair<string, int>& a, const pair<string, int>& b) {
-            return b.second < a.second; // decrescente
+        std::vector<std::pair<std::string, int>> vec(workmap.begin(), workmap.end());
+        sort(vec.begin(), vec.end(), [](const auto& a, const auto& b) {
+            return b.second < a.second;
         });
 
-        cout << "  " << edu << ":\n";
-        for (int i = 0; i < min(3, (int)vec.size()); ++i) {
-            cout << "    " << vec[i].first << ": " << vec[i].second << endl;
+        std::cout << "  " << edu << ":\n";
+        for (int i = 0; i < std::min(3, (int)vec.size()); ++i) {
+            std::cout << "    " << vec[i].first << ": " << vec[i].second << std::endl;
         }
     }
-
-    return 0;
+    std::cout << "--- Fim das Análises Adicionais ---\n";
 }

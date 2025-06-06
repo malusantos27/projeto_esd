@@ -51,7 +51,7 @@ public:
 
     bool removerAux(TrieNode* no, const string& palavra, int idx) {
         if (!no) return false;
-        if (idx == palavra.size()) {
+        if (idx == (int)palavra.size()) {
             if (!no->fim) return false;
             no->fim = false;
             no->contador = 0;
@@ -74,11 +74,12 @@ public:
     }
 };
 
-int main() {
+void executar_benchmark_trie() {
+    cout << "\n--- Executando Benchmark: Trie ---\n";
     ifstream file("Data/adult.data");
     if (!file.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;
-        return 1;
+        return;
     }
 
     vector<string> dados;
@@ -144,5 +145,4 @@ int main() {
 
     bench.close();
     cout << "✅ Benchmark de escalabilidade gerado em benchmark/escalabilidade_trie.csv\n";
-    return 0;
 }

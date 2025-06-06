@@ -132,11 +132,12 @@ NodoAVL* remover(NodoAVL* raiz, string edu) {
     return raiz;
 }
 
-int main() {
+void executar_benchmark_avl() {
+    cout << "\n--- Executando Benchmark: AVL Tree ---\n";
     ifstream file("Data/adult.data");
     if (!file.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;
-        return 1;
+        return;
     }
 
     vector<pair<string, string>> dados;
@@ -210,5 +211,4 @@ int main() {
 
     bench.close();
     cout << "✅ Benchmark de escalabilidade gerado em benchmark/escalabilidade_avl.csv\n";
-    return 0;
 }
